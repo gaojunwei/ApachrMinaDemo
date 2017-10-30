@@ -12,7 +12,6 @@ import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
 /**
- * 
  * @author gjw-pc
  */
 public class MinaServer {

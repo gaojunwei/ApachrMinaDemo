@@ -16,8 +16,7 @@ public class FileUitl {
   * @return  * 
   * @throws Exception
   */
-
- public static String encodeBase64File(String path) throws Exception {
+public static String encodeBase64File(String path) throws Exception {
   File file = new File(path);;
   FileInputStream inputFile = new FileInputStream(file);
   byte[] buffer = new byte[(int) file.length()];
@@ -32,8 +31,8 @@ public class FileUitl {
   * @param base64Code
   * @param targetPath
   * @throws Exception
+  * @author gjw
   */
-
  public static void decoderBase64File(String base64Code, String targetPath)
    throws Exception {
   byte[] buffer = new BASE64Decoder().decodeBuffer(base64Code);

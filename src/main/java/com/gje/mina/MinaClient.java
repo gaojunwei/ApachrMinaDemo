@@ -54,7 +54,7 @@ public class MinaClient {
 		list.add("价格2");
 		list.add("价格3");
 		
-		String base64Code = FileUitl.encodeBase64File("c:/cs/02-3C-1-1.bin");
+		String base64Code = FileUitl.encodeBase64File("c:/cs/02-3C-1-2.bin");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("success", true);
