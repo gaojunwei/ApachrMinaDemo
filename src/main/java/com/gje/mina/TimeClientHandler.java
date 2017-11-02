@@ -20,8 +20,10 @@ public class TimeClientHandler extends IoHandlerAdapter{
 	@Override
 	public void messageReceived(IoSession session, Object message)
 			throws Exception {
+		System.out.println("客户端收到："+session.getId());
 		String str = message.toString();
 		System.out.println("服务器返回的数据："+str);
+		session.write("quit");
 	}
 
 	@Override

@@ -17,7 +17,7 @@ public class SocketClient {
     public static void main(String[] args) throws IOException {
         try {
             // 1、创建客户端Socket，指定服务器地址和端口
-            Socket socket = new Socket("127.0.0.1", 9123);
+            Socket socket = new Socket("10.13.80.176", 9123);
             System.out.println("客户端启动成功");
             // 2、获取输出流，向服务器端发送信息
             

@@ -1,14 +1,13 @@
 package com.gje.mina;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.FiletoBase64.FileUitl;
+import com.alibaba.fastjson.JSON;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 
-import com.FiletoBase64.FileUitl;
-import com.alibaba.fastjson.JSON;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TimeServerHandler extends IoHandlerAdapter{
 
@@ -29,7 +28,14 @@ public class TimeServerHandler extends IoHandlerAdapter{
 			throws Exception {
 		String str = message.toString();
 		System.out.println("服务器端收到信息："+str);
-		
+
+		if(str.equals("quit"))
+		{
+			System.out.println(session.getId()+": 断开连接");
+			session.closeNow();
+			return;
+		}
+
 		Map<String, Object> map = (Map<String, Object>)JSON.parse(str);
 		System.out.println(map.get("success").toString());
 		System.out.println(map.get("reason").toString());
@@ -57,6 +63,7 @@ public class TimeServerHandler extends IoHandlerAdapter{
 		
 		session.write(JSON.toJSONString(maps));
 		System.out.println("向客户端发送数据");
+
 	}
 
 	@Override
