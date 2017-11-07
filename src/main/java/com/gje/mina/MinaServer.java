@@ -16,7 +16,7 @@ import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
  * @author gjw-pc
  */
 public class MinaServer {
-	private static final int PORT  = 9123;
+	private static final int PORT  = 1234;
 	public static void main(String[] args) throws IOException {
 		//监听传入连接的对象
 		IoAcceptor acceptor = new NioSocketAcceptor();
@@ -32,7 +32,7 @@ public class MinaServer {
 		//处理器
 		acceptor.setHandler(new TimeServerHandler());
 		acceptor.getSessionConfig().setReadBufferSize(1024);
-		acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 10);
+		acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 10);//设置空闲时间
 		//设置服务器监听的端口
 		acceptor.bind( new InetSocketAddress(PORT));
 	}

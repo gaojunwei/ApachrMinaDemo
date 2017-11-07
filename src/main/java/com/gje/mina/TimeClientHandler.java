@@ -22,12 +22,20 @@ public class TimeClientHandler extends IoHandlerAdapter{
 			throws Exception {
 		String str = message.toString();
 		System.out.println("服务器返回的数据："+str);
+		//session.closeNow();
+		//session.write("quit");
 	}
 
 	@Override
 	public void sessionIdle(IoSession session, IdleStatus status)
 			throws Exception {
 		System.out.println( "Client IDLE " + session.getIdleCount( status ));
+	}
+
+	@Override
+	public void messageSent(IoSession session, Object message) throws Exception {
+		//System.out.println("已发送信息。。。关闭连接");
+		//session.closeOnFlush();
 	}
 	
 }
