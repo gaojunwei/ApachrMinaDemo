@@ -1,13 +1,14 @@
 package com.gje.mina;
 
-import com.FiletoBase64.FileUitl;
-import com.alibaba.fastjson.JSON;
+import java.util.Date;
+import java.util.Map;
+
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.FiletoBase64.FileUitl;
+import com.alibaba.fastjson.JSON;
 
 public class TimeServerHandler extends IoHandlerAdapter{
 
@@ -27,33 +28,7 @@ public class TimeServerHandler extends IoHandlerAdapter{
 	public void messageReceived(IoSession session, Object message)
 			throws Exception {
 		String str = message.toString();
-		System.out.println("服务器端收到信息："+str);
-
-		if(str.equals("quit"))
-		{
-			System.out.println(session.getId()+": 断开连接");
-			session.closeNow();
-			return;
-		}
-
-		Map<String, Object> map = (Map<String, Object>)JSON.parse(str);
-		System.out.println(map.get("success").toString());
-		System.out.println(map.get("reason").toString());
-		String base64Code = map.get("data").toString();
-		
-		FileUitl.decoderBase64File(base64Code, "c:/cs/02-3C-1-1-server副本.bin");
-		//List<String> list = (List)map.get("data");
-		
-		/*for (String strs:list) {
-			System.out.println("遍历集合："+strs);
-		}*/
-		
-		String base64Codes = FileUitl.encodeBase64File("c:/cs/02-3C-1-2.bin");
-		
-		Map<String, Object> maps = new HashMap<String, Object>();
-		maps.put("success", true);
-		maps.put("reason", "");
-		maps.put("data", base64Codes);
+		System.out.println("服务器端收到信息："+(session.getId())+"："+str);
 		
 		if( str.trim().equalsIgnoreCase("quit") ) {
 			System.out.println(session.getId()+"：关闭与服务器的链接。。。");
@@ -61,15 +36,33 @@ public class TimeServerHandler extends IoHandlerAdapter{
 			return;
 		}
 		
-		session.write(JSON.toJSONString(maps));
+		/*Map<String, Object> map = (Map<String, Object>)JSON.parse(str);
+		System.out.println(map.get("success").toString());
+		System.out.println(map.get("reason").toString());
+		String base64Code = map.get("data").toString();
+		
+		FileUitl.decoderBase64File(base64Code, "c:/cs/02-3C-1-1-副本.bin");*/
+		//List<String> list = (List)map.get("data");
+		
+		/*for (String strs:list) {
+			System.out.println("遍历集合："+strs);
+		}*/
+		
+		Date date = new Date();
+		session.write( date.toString());
 		System.out.println("向客户端发送数据");
-
 	}
 
 	@Override
 	public void sessionIdle(IoSession session, IdleStatus status)
 			throws Exception {
-		System.out.println( "IDLE " + session.getIdleCount( status ));
+		System.out.println( "空闲 " + session.getIdleCount( status )
+				+" - "+(new Date().getTime()/1000)+" - "+(session.getId()));
+	}
+
+	@Override
+	public void messageSent(IoSession session, Object message) throws Exception {
+		session.closeOnFlush();
 	}
 	
 }
